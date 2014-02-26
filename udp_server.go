@@ -1,46 +1,48 @@
+//@author: Parag Patel
+
 package main
 
 import (
-"net"
-"fmt"
-"time"
+	"fmt"
+	"net"
+	"time"
 )
 
 func main() {
 
 	port := ":1200"
-	
-	udpAddress, err := net.ResolveUDPAddr("udp4",port)
-	
+
+	udpAddress, err := net.ResolveUDPAddr("udp4", port)
+
 	if err != nil {
-                fmt.Println("error resolving UDP address on ", port)
-                fmt.Println(err)
-                return
-        }
-	
-	conn ,err := net.ListenUDP("udp",udpAddress)
-	
+		fmt.Println("error resolving UDP address on ", port)
+		fmt.Println(err)
+		return
+	}
+
+	conn, err := net.ListenUDP("udp", udpAddress)
+
 	if err != nil {
 		fmt.Println("error listening on UDP port ", port)
 		fmt.Println(err)
 		return
 	}
-	
+
 	defer conn.Close()
 
-	buf := make([]byte,10)
+	buf := make([]byte, 10)
 
 	for {
 
 		time.Sleep(100 * time.Millisecond)
 
-		n,address, err := conn.ReadFrom(buf)
-		
+		n, address, err := conn.ReadFrom(buf)
+
 		if err != nil {
-                        fmt.Println("error reading data from connection")
-                        fmt.Println(err)
-                        return
-                }
+			fmt.Println("error reading data from connection")
+			fmt.Println(err)
+			return
+		}
 
 		if address != nil {
 
@@ -51,23 +53,5 @@ func main() {
 			}
 		}
 	}
-	
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
